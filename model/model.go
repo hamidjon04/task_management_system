@@ -21,13 +21,17 @@ type LoginResp struct{
 }
 
 type UserInfo struct{
-	UserId string `json:"user_id"`
+	Id string `json:"id"`
 	Username string `json:"username"`
 	PasswordHash string `json:"password_hash"`
 }
 
 type SaveTokenReq struct{
-	Userid string `json:"user_id"`
+	UserId string `json:"user_id"`
 	RefreshToken string `json:"refresh_token"`
-	ExpiresAt string `json:"expires_at"`
+	ExpiresAt int64 `json:"expires_at"`
+}
+
+type Error struct{
+	Message string `json:"message"`
 }

@@ -51,7 +51,7 @@ func (U *userImpl) CheckUser(email string) (*model.UserInfo, error) {
 					users
 				WHERE
 					email = $1`
-	err := U.Db.QueryRow(query, email).Scan(&resp.UserId, &resp.Username, &resp.PasswordHash)
+	err := U.Db.QueryRow(query, email).Scan(&resp.Id, &resp.Username, &resp.PasswordHash)
 	if err != nil {
 		log.Println(err)
 		return nil, err
@@ -65,7 +65,7 @@ func (U *userImpl) SaveToken(req *model.SaveTokenReq) error {
 					user_id, refresh_token, expires_at)
 				VALUES
 					($1, $2, $3)`
-	_, err := U.Db.Exec(query, req.Userid, req.RefreshToken, req.ExpiresAt)
+	_, err := U.Db.Exec(query, req.UserId, req.RefreshToken, req.ExpiresAt)
 	if err != nil {
 		log.Println(err)
 		return err
