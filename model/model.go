@@ -35,3 +35,16 @@ type SaveTokenReq struct{
 type Error struct{
 	Message string `json:"message"`
 }
+
+type CreateTaskRead struct{
+	Title string `json:"title"`
+}
+
+type CreateTaskReq struct{
+	UserId string `json:"user_id"`
+	Title string `json:"title"`
+}
+
+type CreateTaskResp struct{
+	Id string `json:"id"`
+}

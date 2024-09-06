@@ -12,6 +12,7 @@ type UserRepo interface {
 	Register(req *model.RegisterReq) (*model.RegisterResp, error) 
 	CheckUser(email string) (*model.UserInfo, error)
 	SaveToken(req *model.SaveTokenReq) error
+	CreateTask(req *model.CreateTaskReq)(*model.CreateTaskResp, error)
 }
 
 type userImpl struct {
@@ -71,4 +72,22 @@ func (U *userImpl) SaveToken(req *model.SaveTokenReq) error {
 		return err
 	}
 	return nil
+}
+
+func(T *userImpl) CreateTask(req *model.CreateTaskReq)(*model.CreateTaskResp, error){
+	id := uuid.NewString()
+	
+	query := `
+				INSERT INTO tasks(
+					id, user_id, title)
+				VALUES
+					($1, $2, $3)`
+	_, err := T.Db.Exec(query, id, req.UserId, req.Title)
+	if err != nil{
+		log.Println(err)
+		return nil, err
+	}
+	return &model.CreateTaskResp{
+		Id: id,
+	}, nil
 }
